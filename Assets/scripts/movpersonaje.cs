@@ -1,37 +1,47 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class movpersonaje : MonoBehaviour
 {
-    int miNumero = 1;
+    public float velocidad = 0.5f;
 
-    float miNumeroFlotante = 0.8f;
+    Rigibody2D rb;
 
-    string miCadenaDeTexto = "Hola cadena de texto";
-
-    bool miBoolean = true;
-                                        
-    bool estrella = false;
+bool estoySaltando = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        int sumaEntreDecenas = Sumar(10,20);
-        Debug.Log("Inicio");
+
+        rb = GetComponent<Rigibody2D>();
+    
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Hola");
+    
+        Vector2 moveInput = InputSystem.actions["Move"].ReadValue<Vector2>();
+        this.transform.Translate(moveInput.x*velocidad, 0, 0);
+        
+//flip
+
+        if(moveInput.x > 0)
+        {
+        this.GetComponent<SpriteRenderer>().flipX = false;
     }
-    //esto es un comentario, * y barras es para encerrar comentario
+    
 
-int Sumar(int num1, int num2)
-{
 
-int suma = num1 + num2;
+//salto
+    bool salto = InputSystem.actions["Jump"].WasPressedThisFrame();
+    if(salto == true)
+    {
+Debug.Log("salto");
+     rb.Addforce(transform.up,ForceMode2D.Impulse);
+    
+    }
+    
 
-return suma;
 }
-
 }
