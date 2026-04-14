@@ -8,18 +8,25 @@ public class movpersonaje : MonoBehaviour
 
     Rigidbody2D rb;
 
+    Animator ControlAnimacion;
+
 bool puedoSaltar = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        
+        ControlAnimacion = GetComponent<Animator>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+       // ControlAnimacion.SetBool("ActivaCaminar", true);
+
+        //movimeinto
         Vector2 moveInput = InputSystem.actions["Move"].ReadValue<Vector2>();
         this.transform.Translate(moveInput.x*velocidad, 0, 0);
 
@@ -32,7 +39,17 @@ bool puedoSaltar = false;
     this.GetComponent<SpriteRenderer>().flipX = false;
     }
 
+//animaciones
+if(moveInput.x != 0)
+{
+    ControlAnimacion.SetBool("ActivaCaminar", true);
+}
+else
+{
+    ControlAnimacion.SetBool("ActivaCaminar", false);
+}
 
+//salto
 RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.down*0.5f);
 Debug.DrawRay(transform.position,Vector2.down*0.5f, Color.red);
 
@@ -56,7 +73,20 @@ transform.localScale = new Vector3(2,2,1);
     {
      rb.AddForce(transform.up*impulsoSalto,ForceMode2D.Impulse);
     }
-    
+    }
+
+void OnTriggerEnter2D(Collider2D col)
+    {
+     Debug.Log("Trigger con: " + col.gameObject.name);
+
+     if(col.gameObject.name == "dead")
+{
+    GameManager.vidas = GameManager.vidas - 1;
+    transform.position = new Vector3(0,0,0);
+
+    }
+
+
 
 }
 }

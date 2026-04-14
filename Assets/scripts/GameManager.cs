@@ -1,9 +1,8 @@
 using UnityEngine;
 
-public class camara : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public GameObject persdonaje;
-    Vector3 dondePersonaje;
+public static int vidas = 3;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,6 +12,6 @@ public class camara : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log("Vidas: " + vidas);
     }
 }
