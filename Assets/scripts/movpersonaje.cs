@@ -6,18 +6,22 @@ public class movpersonaje : MonoBehaviour
     public float velocidad = 0.5f;
     public float impulsoSalto = 1.0f;
 
+    public GameObject senyal;
+
     Rigidbody2D rb;
 
     Animator ControlAnimacion;
 
 bool puedoSaltar = false;
-
+GameObject respawn;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
+        senyal = GameObject.Find("sign");
         ControlAnimacion = GetComponent<Animator>();
+        respawn = GameObject.Find("Respawn");
+        transform.position = respawn.transform.position;
 
     }
 
@@ -57,15 +61,13 @@ if(hit.collider == true)
     {
 puedoSaltar = true;
 this.GetComponent<SpriteRenderer>().color = Color.red;
-transform.localScale = new Vector3(1,1,1);
+
     }
 else
     {
 puedoSaltar = false;
 this.GetComponent<SpriteRenderer>().color = Color.white;
-transform.localScale = new Vector3(2,2,1);
      }
-
 
 //salto
     bool salto = InputSystem.actions["Jump"].WasPressedThisFrame();
@@ -74,19 +76,38 @@ transform.localScale = new Vector3(2,2,1);
      rb.AddForce(transform.up*impulsoSalto,ForceMode2D.Impulse);
     }
     }
-
-void OnTriggerEnter2D(Collider2D col)
+ 
+//disparo
+    bool disparo = InputSystem.actions["Attack"].WasPressedThisFrame();
+    if(disparo)
     {
-     Debug.Log("Trigger con: " + col.gameObject.name);
-
-     if(col.gameObject.name == "dead")
-{
-    GameManager.vidas = GameManager.vidas - 1;
-    transform.position = new Vector3(0,0,0);
-
+     Instantiate(senyal, new Vector3 (0,0,0), Quaternion.identity);
     }
 
 
+    void OnTriggerEnter2D(Collider2D col)
+        {
+        Debug.Log("Trigger con: " + col.gameObject.name);
+        //muerte
 
-}
+        if(col.gameObject.name == "dead")
+        {
+        GameManager.vidas -= 1;
+        transform.position = respawn.transform.position;
+        }
+
+        //CHECKPOINT
+        if(col.gameObject.name == "checkpoint")
+        {
+        respawn.transform.position = col.transform.position;
+        }
+
+        //coin
+        if(col.gameObject.name == "coin")
+        {
+        GameManager.puntos += 10;
+        Destroy(col.gameObject, 3.0f);
+        }
+
+    }
 }
