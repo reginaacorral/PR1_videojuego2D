@@ -14,6 +14,11 @@ public class movpersonaje : MonoBehaviour
 
 bool puedoSaltar = false;
 GameObject respawn;
+public bool direccionBalaDerecha = true;
+
+
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,9 +42,11 @@ GameObject respawn;
 //flip
         if(moveInput.x < 0)
         {
+            direccionBalaDerecha = false;
         this.GetComponent<SpriteRenderer>().flipX = true;
     }else if(moveInput.x > 0)
 {
+    direccionBalaDerecha = true;
     this.GetComponent<SpriteRenderer>().flipX = false;
     }
 
@@ -77,13 +84,6 @@ this.GetComponent<SpriteRenderer>().color = Color.white;
     }
     }
  
-//disparo
-    bool disparo = InputSystem.actions["Attack"].WasPressedThisFrame();
-    if(disparo)
-    {
-     Instantiate(senyal, new Vector3 (0,0,0), Quaternion.identity);
-    }
-
 
     void OnTriggerEnter2D(Collider2D col)
         {
@@ -102,12 +102,8 @@ this.GetComponent<SpriteRenderer>().color = Color.white;
         respawn.transform.position = col.transform.position;
         }
 
-        //coin
-        if(col.gameObject.name == "coin")
-        {
-        GameManager.puntos += 10;
-        Destroy(col.gameObject, 3.0f);
-        }
+        
 
     }
+    
 }
