@@ -87,13 +87,11 @@ this.GetComponent<SpriteRenderer>().color = Color.white;
 
     void OnTriggerEnter2D(Collider2D col)
         {
-        Debug.Log("Trigger con: " + col.gameObject.name);
         //muerte
 
         if(col.gameObject.name == "dead")
         {
-        GameManager.vidas -= 1;
-        transform.position = respawn.transform.position;
+        Muerte();
         }
 
         //CHECKPOINT
@@ -105,5 +103,13 @@ this.GetComponent<SpriteRenderer>().color = Color.white;
         
 
     }
-    
+    public void Muerte()
+{
+GameManager.vidas -=1;
+transform.position = respawn.transform.position;
 }
+
+
+
+}
+
