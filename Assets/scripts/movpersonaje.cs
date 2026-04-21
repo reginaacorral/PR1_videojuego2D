@@ -12,11 +12,11 @@ public class movpersonaje : MonoBehaviour
 
     Animator ControlAnimacion;
 
-bool puedoSaltar = false;
-GameObject respawn;
-public bool direccionBalaDerecha = true;
+    bool puedoSaltar = false;
+    GameObject respawn;
+    public bool direccionBalaDerecha = true;
 
-
+    public string direccionPersonaje = "quieto";
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,48 +40,53 @@ public bool direccionBalaDerecha = true;
         this.transform.Translate(moveInput.x*velocidad, 0, 0);
 
 //flip
-        if(moveInput.x < 0)
+    if(moveInput.x < 0)
         {
             direccionBalaDerecha = false;
         this.GetComponent<SpriteRenderer>().flipX = true;
-    }else if(moveInput.x > 0)
-{
-    direccionBalaDerecha = true;
-    this.GetComponent<SpriteRenderer>().flipX = false;
-    }
+        direccionPersonaje = "izq";
+        }
+    else if(moveInput.x > 0)
+        {
+        direccionBalaDerecha = true;
+        this.GetComponent<SpriteRenderer>().flipX = false;
+        direccionPersonaje = "izq";
+        }
+        
+            
+        
 
 //animaciones
-if(moveInput.x != 0)
-{
-    ControlAnimacion.SetBool("ActivaCaminar", true);
-}
-else
-{
-    ControlAnimacion.SetBool("ActivaCaminar", false);
-}
+    if(moveInput.x != 0)
+        {
+        ControlAnimacion.SetBool("ActivaCaminar", true);
+        }
+    else
+        {
+        ControlAnimacion.SetBool("ActivaCaminar", false);
+        }
 
 //salto
-RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.down*0.5f);
-Debug.DrawRay(transform.position,Vector2.down*0.5f, Color.red);
+    RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.down*0.5f);
+    Debug.DrawRay(transform.position,Vector2.down*0.5f, Color.red);
 
-if(hit.collider == true)
-    {
-puedoSaltar = true;
-this.GetComponent<SpriteRenderer>().color = Color.red;
-
-    }
-else
-    {
-puedoSaltar = false;
-this.GetComponent<SpriteRenderer>().color = Color.white;
-     }
+    if(hit.collider == true)
+        {
+        puedoSaltar = true;
+        this.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+    else
+        {
+        puedoSaltar = false;
+        this.GetComponent<SpriteRenderer>().color = Color.white;
+        }
 
 //salto
-    bool salto = InputSystem.actions["Jump"].WasPressedThisFrame();
+        bool salto = InputSystem.actions["Jump"].WasPressedThisFrame();
     if(salto == true && puedoSaltar == true)
-    {
-     rb.AddForce(transform.up*impulsoSalto,ForceMode2D.Impulse);
-    }
+        {
+        rb.AddForce(transform.up*impulsoSalto,ForceMode2D.Impulse);
+        }
     }
  
 
@@ -104,10 +109,10 @@ this.GetComponent<SpriteRenderer>().color = Color.white;
 
     }
     public void Muerte()
-{
-GameManager.vidas -=1;
-transform.position = respawn.transform.position;
-}
+        {
+        GameManager.vidas -=1;
+        transform.position = respawn.transform.position;
+        }
 
 
 

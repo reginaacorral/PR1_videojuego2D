@@ -37,8 +37,8 @@ public class Enemigo : MonoBehaviour
     void Update()
     {
        float distancia = Vector3.Distance(transform.position, personaje.transform.position);
-     
-        //ataque
+
+        //deteccion
        if(distancia <= distanciaAtaque)
         {
             estado = "ataque";
