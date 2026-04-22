@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +18,8 @@ public class movpersonaje : MonoBehaviour
     public bool direccionBalaDerecha = true;
 
     public string direccionPersonaje = "quieto";
+
+    bool estoyAzul = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -73,12 +76,10 @@ public class movpersonaje : MonoBehaviour
     if(hit.collider == true)
         {
         puedoSaltar = true;
-        this.GetComponent<SpriteRenderer>().color = Color.red;
         }
     else
         {
         puedoSaltar = false;
-        this.GetComponent<SpriteRenderer>().color = Color.white;
         }
 
 //salto
@@ -109,12 +110,25 @@ public class movpersonaje : MonoBehaviour
 
     }
     public void Muerte()
-        {
+    {
         GameManager.vidas -=1;
         transform.position = respawn.transform.position;
+    }
+
+    public void CambiaColor()
+    { 
+       if (estoyAzul)
+        {
+        this.GetComponent<SpriteRenderer>().color = Color.white;
+        estoyAzul = false;
         }
 
-
-
+        else
+        {
+        this.GetComponent<SpriteRenderer>().color = Color.blue;
+        estoyAzul = true;
+        }
+       
+    }
 }
 
