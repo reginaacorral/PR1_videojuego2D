@@ -21,7 +21,6 @@ public class movpersonaje : MonoBehaviour
 
     bool estoyAzul = false;
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,105 +29,96 @@ public class movpersonaje : MonoBehaviour
         ControlAnimacion = GetComponent<Animator>();
         respawn = GameObject.Find("Respawn");
         transform.position = respawn.transform.position;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-       // ControlAnimacion.SetBool("ActivaCaminar", true);
+        // ControlAnimacion.SetBool("ActivaCaminar", true);
 
         //movimeinto
         Vector2 moveInput = InputSystem.actions["Move"].ReadValue<Vector2>();
-        this.transform.Translate(moveInput.x*velocidad, 0, 0);
+        this.transform.Translate(moveInput.x * velocidad, 0, 0);
 
-//flip
-    if(moveInput.x < 0)
+        //flip
+        if (moveInput.x < 0)
         {
             direccionBalaDerecha = false;
-        this.GetComponent<SpriteRenderer>().flipX = true;
-        direccionPersonaje = "izq";
+            this.GetComponent<SpriteRenderer>().flipX = true;
+            direccionPersonaje = "izq";
         }
-    else if(moveInput.x > 0)
+        else if (moveInput.x > 0)
         {
-        direccionBalaDerecha = true;
-        this.GetComponent<SpriteRenderer>().flipX = false;
-        direccionPersonaje = "izq";
-        }
-        
-            
-        
-
-//animaciones
-    if(moveInput.x != 0)
-        {
-        ControlAnimacion.SetBool("ActivaCaminar", true);
-        }
-    else
-        {
-        ControlAnimacion.SetBool("ActivaCaminar", false);
+            direccionBalaDerecha = true;
+            this.GetComponent<SpriteRenderer>().flipX = false;
+            direccionPersonaje = "izq";
         }
 
-//salto
-    RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.down*0.5f);
-    Debug.DrawRay(transform.position,Vector2.down*0.5f, Color.red);
-
-    if(hit.collider == true)
+        //animaciones
+        if (moveInput.x != 0)
         {
-        puedoSaltar = true;
+            ControlAnimacion.SetBool("ActivaCaminar", true);
         }
-    else
+        else
         {
-        puedoSaltar = false;
+            ControlAnimacion.SetBool("ActivaCaminar", false);
         }
 
-//salto
+        //salto
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down * 0.5f);
+        Debug.DrawRay(transform.position, Vector2.down * 0.5f, Color.red);
+
+        if (hit.collider == true)
+        {
+            puedoSaltar = true;
+        }
+        else
+        {
+            puedoSaltar = false;
+        }
+
+        //salto
         bool salto = InputSystem.actions["Jump"].WasPressedThisFrame();
-    if(salto == true && puedoSaltar == true)
+        if (salto == true && puedoSaltar == true)
         {
-        rb.AddForce(transform.up*impulsoSalto,ForceMode2D.Impulse);
+            rb.AddForce(transform.up * impulsoSalto, ForceMode2D.Impulse);
         }
     }
- 
 
     void OnTriggerEnter2D(Collider2D col)
-        {
+    {
         //muerte
 
-        if(col.gameObject.name == "dead")
+        if (col.gameObject.name == "dead")
         {
-        Muerte();
+            Muerte();
         }
 
         //CHECKPOINT
-        if(col.gameObject.name == "checkpoint")
+        if (col.gameObject.name == "checkpoint")
         {
-        respawn.transform.position = col.transform.position;
+            respawn.transform.position = col.transform.position;
         }
-
-        
-
     }
+
     public void Muerte()
     {
-        GameManager.vidas -=1;
+        GameManager.vidas -= 1;
+        AudioManager.Instance.SonarClipUnaVez(AudioManager.Instance.muerte);
         transform.position = respawn.transform.position;
     }
 
     public void CambiaColor()
-    { 
-       if (estoyAzul)
+    {
+        if (estoyAzul)
         {
-        this.GetComponent<SpriteRenderer>().color = Color.white;
-        estoyAzul = false;
+            this.GetComponent<SpriteRenderer>().color = Color.white;
+            estoyAzul = false;
         }
-
         else
         {
-        this.GetComponent<SpriteRenderer>().color = Color.blue;
-        estoyAzul = true;
+            this.GetComponent<SpriteRenderer>().color = Color.blue;
+            estoyAzul = true;
         }
-       
     }
 }
-
