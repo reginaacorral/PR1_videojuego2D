@@ -9,19 +9,20 @@ public class AudioManager : MonoBehaviour
     public AudioClip muerte;
     public AudioClip fantasmas;
     public AudioClip fuego;
-    public AudioSource _audioSource;
+    AudioSource _audioSource;
 
     void Awake()
     {
-        if( Instance != null && Instance != this)
+        if (Instance != null && Instance != this)
         {
-            Destroy(this.gameObject); return;
+            Destroy(this.gameObject);
+            return;
         }
         else
         {
+            Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
-
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -45,5 +46,4 @@ public class AudioManager : MonoBehaviour
     {
         GetComponent<AudioSource>().PlayOneShot(clip);
     }
-
 }

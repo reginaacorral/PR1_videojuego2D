@@ -57,8 +57,9 @@ public class Enemigo : MonoBehaviour
         //patrulla
         if (estado == "patrulla")
         {
-            Debug.Log("posicionLimitDcha" + posicionLimitDcha);
-            Debug.Log("posicionLimitDcha" + posicionLimitDcha);
+            this.GetComponent<SpriteRenderer>().color = Color.white;
+            //Debug.Log("posicionLimitDcha" + posicionLimitDcha);
+//Debug.Log("posicionLimitDcha" + posicionLimitDcha);
 
             if (transform.position.x >= posicionLimitDcha.x)
             {
@@ -84,13 +85,18 @@ public class Enemigo : MonoBehaviour
 
         if (estado == "ataque")
         {
-            transform.position = Vector3.MoveTowards(transform.position,personaje.transform.position,velocidadAtaque);
+            // al entrar en modo ataque, los enemigos se velven rojos
+            this.GetComponent<SpriteRenderer>().color = Color.red;
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                personaje.transform.position,
+                velocidadAtaque
+            );
 
-            if(AudioManager.Instance.GetComponent<AudioSource>().isPlaying == true)
-            { }
+            if (AudioManager.Instance.GetComponent<AudioSource>().isPlaying == true) { }
             else
             {
-               AudioManager.Instance.SonarClipUnaVez(AudioManager.Instance.fantasmas);
+                AudioManager.Instance.SonarClipUnaVez(AudioManager.Instance.fantasmas);
             }
 
             AudioManager.Instance.SonarClipUnaVez(AudioManager.Instance.fantasmas);

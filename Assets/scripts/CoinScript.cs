@@ -17,10 +17,11 @@ public class CoinScript : MonoBehaviour
 
         if (col.gameObject.name == "personaje")
         {
+            // no logre hacer desaparecer las monedas al ser recolectadas por el personaje
+            Destroy(this.gameObject, 3.0f);
             GameManager.puntos += valor;
             AudioManager.Instance.SonarClipUnaVez(AudioManager.Instance.monedas);
             gameObject.GetComponent<Animator>().SetBool("obtenerCoin", true);
-            Destroy(this.gameObject, 3.0f);
         }
     }
 }

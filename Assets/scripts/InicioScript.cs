@@ -3,10 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class InicioScript : MonoBehaviour
 {
-
     public GameObject panelInicio;
-    public GameObject panelSettings;
-    
+    public GameObject panelSettings; 
     public GameObject AudioManagerObj;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,13 +40,4 @@ public class InicioScript : MonoBehaviour
     {
         Application.Quit();
     }
-
-
-
-
-
-
-
-
-
 }

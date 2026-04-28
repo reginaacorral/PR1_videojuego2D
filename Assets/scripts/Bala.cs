@@ -14,7 +14,6 @@ public class Bala : MonoBehaviour
 
     public float tiempoHastaDestruccion = 5.0f;
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,24 +25,26 @@ public class Bala : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Time.time);
+        //Debug.Log(Time.time);
 
-    if (direccionpersonaje)
+        if (direccionpersonaje)
         {
-        disparo.transform.Translate(velocidadBala*Time.deltaTime,0,0);
-        transform.Rotate(0,0,0.5f);
-        } 
-    else
+            disparo.transform.Translate(velocidadBala * Time.deltaTime, 0, 0);
+            transform.Rotate(0, 0, 0.5f);
+        }
+        else
         {
-        disparo.transform.Translate(velocidadBala*-1,0,0);
-        transform.Rotate(0,0,-0.5f);
+            // al voltear a la izquierza la bola de fuego se torna color rojo
+            this.GetComponent<SpriteRenderer>().color = Color.red;
+            disparo.transform.Translate(velocidadBala * -Time.deltaTime, 0, 0);
+            transform.Rotate(0, 0, -0.5f);
         }
 
         // destruccion por tiempo
-    if (Time.time >= heNacido + tiempoHastaDestruccion)
+        if (Time.time >= heNacido + tiempoHastaDestruccion)
         {
-        Destroy(disparo);
+            Destroy(disparo);
         }
-
     }
 }
+ 

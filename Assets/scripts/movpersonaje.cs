@@ -21,6 +21,7 @@ public class movpersonaje : MonoBehaviour
 
     bool estoyAzul = false;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -87,6 +88,7 @@ public class movpersonaje : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log(col.gameObject.name);
         //muerte
 
         if (col.gameObject.name == "dead")

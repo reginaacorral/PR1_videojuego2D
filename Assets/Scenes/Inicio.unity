@@ -874,6 +874,9 @@ MonoBehaviour:
   clipBotones: {fileID: 8300000, guid: 1755c9a2a232d7b4eb95b8a6fd60d260, type: 3}
   bandaSonora: {fileID: 8300000, guid: eed6b6373d8422540a1da10f77302863, type: 3}
   monedas: {fileID: 8300000, guid: 79b733683d954914a97598dab3139b5a, type: 3}
+  muerte: {fileID: 8300000, guid: 7421d61ece0cfca4cbf074cdb4e0f738, type: 3}
+  fantasmas: {fileID: 8300000, guid: 576e775289767cc469340fb4dab78ba3, type: 3}
+  fuego: {fileID: 8300000, guid: 62686356f5dc82a458476b9d11c150a9, type: 3}
 --- !u!4 &824722678
 Transform:
   m_ObjectHideFlags: 0
